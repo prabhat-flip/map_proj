@@ -21,10 +21,9 @@ const PrimaryMap = () => {
 	const [markers, setMarkers] = useState([]);
 	const [selectedMarker, setSelectedMarker] = useState(null);
 	const [isMobile, setIsMobile] = useState(false);
-	const [currentMode, setCurrentMode] = useState("marker"); // 'marker' or 'polygon'
+	const [currentMode, setCurrentMode] = useState("marker");
 	const [modeChangeIndicator, setModeChangeIndicator] = useState("");
 
-	// Check if mobile on mount and resize
 	useEffect(() => {
 		const checkMobile = () => {
 			const mobile = window.innerWidth <= 768;
@@ -36,17 +35,14 @@ const PrimaryMap = () => {
 		return () => window.removeEventListener("resize", checkMobile);
 	}, []);
 
-	// Load saved data on mount
 	useEffect(() => {
 		loadFromLocalStorage();
 	}, []);
 
-	// Save to localStorage whenever markers or mode changes
 	useEffect(() => {
 		saveToLocalStorage();
 	}, [markers, roundedArea, currentMode]);
 
-	// ADD THE MISSING changeMode FUNCTION
 	const changeMode = (mode) => {
 		setCurrentMode(mode);
 
@@ -162,7 +158,6 @@ const PrimaryMap = () => {
 		setSelectedMarker(null);
 	};
 
-	// Clear all markers and polygons
 	const clearAll = () => {
 		// Clear all markers
 		markers.forEach((marker) => {
@@ -185,7 +180,7 @@ const PrimaryMap = () => {
 		localStorage.removeItem("mapState");
 	};
 
-	// Save to localStorage
+	//  localStorage
 	const saveToLocalStorage = () => {
 		try {
 			const polygons = drawRef.current ? drawRef.current.getAll() : { features: [] };
@@ -202,7 +197,7 @@ const PrimaryMap = () => {
 		}
 	};
 
-	// Load from localStorage
+	// Load   localStorage
 	const loadFromLocalStorage = () => {
 		try {
 			const saved = localStorage.getItem("mapState");
@@ -233,7 +228,7 @@ const PrimaryMap = () => {
 		}
 	};
 
-	// Load saved polygons
+	//   saved polygons
 	const loadSavedPolygons = () => {
 		try {
 			const saved = localStorage.getItem("mapState");
@@ -345,7 +340,6 @@ const PrimaryMap = () => {
 				}}
 			/>
 
-			{/* Sidebar - Always visible on desktop, hidden on mobile */}
 			{!isMobile && (
 				<div
 					style={{
@@ -358,7 +352,7 @@ const PrimaryMap = () => {
 						padding: "20px",
 						overflowY: "auto",
 						boxShadow: "-2px 0 10px rgba(0,0,0,0.1)",
-						zIndex: 100, 
+						zIndex: 100,
 					}}
 				>
 					<h3 style={{ margin: "0 0 20px 0", fontSize: "18px", fontWeight: "bold" }}>Map Controls</h3>
@@ -644,7 +638,6 @@ const PrimaryMap = () => {
 				</div>
 			)}
 
-			{/* Hidden file input for import */}
 			<input
 				ref={fileInputRef}
 				type="file"
@@ -653,10 +646,8 @@ const PrimaryMap = () => {
 				style={{ display: "none" }}
 			/>
 
-			{/* Mobile overlay for controls */}
 			{isMobile && (
 				<>
-					{/* Mode Selection for Mobile */}
 					<div
 						style={{
 							position: "fixed",
@@ -718,7 +709,6 @@ const PrimaryMap = () => {
 						</div>
 					</div>
 
-					{/* Action buttons for Mobile */}
 					<div
 						style={{
 							position: "fixed",
